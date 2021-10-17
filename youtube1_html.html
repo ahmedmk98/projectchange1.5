@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="ScrollBar.css">
+    <style>
+    body{
+        background-color: rgb(229, 229, 229);
+    }
+    .video{
+        position: absolute;
+        left: 420px;
+        top: 150px;
+    }
+    .quarter_circle_top_left{
+        width: 75px;
+        height: 75px;
+        background: limegreen;
+        border-radius: 0 0 100px 0;
+        -moz-border-radius: 0 0 100px 0;
+        -webkit-border-radius: 0 0 100px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    .quarter_circle_top_right{
+        width: 75px;
+        height: 75px;
+        background: limegreen;
+        border-radius: 0 0 0 100px; 
+        -moz-border-radius: 0 0 0 100px;
+        -webkit-border-radius: 0 0 0 100px;
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+    .quarter_circle_bottom_left{
+        width: 75px;
+        height: 75px;
+        background: limegreen;
+        border-radius: 0 100px 0 0;
+        -moz-border-radius: 0 100px 0 0;
+        -webkit-border-radius: 0 100px 0 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+    }
+    .quarter_circle_bottom_right{
+        width: 75px;
+        height: 75px;
+        background: limegreen;
+        border-radius: 100px 0 0 0;
+        -moz-border-radius: 100px 0 0 0;
+        -webkit-border-radius: 100px 0 0 0;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+    /*dark mode start here*/
+    .dm{
+        color: #2196F3;
+        font-size: 18px;
+        font-weight: bold;
+        position: absolute;
+        top: 63px;
+        left: 588px;
+    }
+    .dark-mode {
+        background-color: black;
+    }
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        top: 23px;
+        left: 600px;
+    }
+    .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+    .slider.round {
+        border-radius: 34px;
+    }
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    /*dark mode end here*/
+    /*loading bar for page start from here*/
+    #loader {
+        background-color: limegreen;
+        background-image: url(img/KKU.png);
+        background-size: 100px;
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-position-y: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 120px;
+        height: 120px;
+        margin: -76px 0 0 -76px;
+        border: 16px solid white;
+        border-radius: 50%;
+        border-top: 16px solid gray;
+        -webkit-animation: spin 1.5s linear infinite;
+        animation: spin 1.5s linear infinite;
+    }
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+    }
+    @-webkit-keyframes animatebottom {
+        from { bottom:-100px; opacity:0 } 
+        to { bottom:0px; opacity:1 }
+    }
+    @keyframes animatebottom { 
+        from{ bottom:-100px; opacity:0 } 
+        to{ bottom:0; opacity:1 }
+    }
+    /*----- end here -----*/
+    </style>
+</head>
+<body onload="myFunction()" style="margin:0;">
+    <div id="loader"></div>
+        <script>
+    var myVar;
+    function myFunction() {
+      myVar = setTimeout(showPage, 1250);
+    }
+    function showPage() {
+      document.getElementById("loader").style.display = "none";
+    }
+    </script>
+
+    <script>
+    function mydark() {
+        var element = document.body;
+        element.classList.toggle("dark-mode");
+    }
+    </script>
+    
+    <div class="dm"> Dark-mode </div>
+    <label class="switch">
+        <input type="checkbox"onclick="mydark()">
+        <span class="slider round"> </span>
+    </label>
+    <iframe class="video" width="420" height="345" src="https://www.youtube.com/embed/qz0aGYrrlhU">
+    </iframe>
+    <div class="quarter_circle_top_left"></div>
+    <div class="quarter_circle_top_right"></div>
+    <div class="quarter_circle_bottom_left"></div>
+    <div class="quarter_circle_bottom_right"></div>
+
+</body>
+</html>
