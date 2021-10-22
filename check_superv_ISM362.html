@@ -12,7 +12,11 @@
 
     <body>
     </br></br></br></br>
-
+    <div class="jumbotron text-center">
+    <h2>INFORMATION TECHNOLOGIE</h2>
+    <p>This Page You Can View,Add,Update And Delete Content </p> 
+  </div>
+  
     <div class="progress-container">
         <div class="progress-bar" id="myBar"></div>
     </div> 
@@ -20,20 +24,27 @@
             <!--start searsh now-->
              <div class="input-group mb-3">
                 <input id="SearchBar" type="text" class="form-control" placeholder="Search in content" aria-label="Recipient's username" aria-describedby="button-addon2">
+               
                 <div class="input-group-append">
                 <select class="custom-select" id="CategorySelected">
-                   <option selected value="1"> By name</option>
-                   <!---- <option value="2">link</option>
-                    <option value="3">sno</option>-->
+                   <option selected value="1"> By Subject Name</option>
+                   <option value="2">By type</option>
+                   <!---- <option value="3">sno</option>-->
                   </select>
                 <button id="SearchBtn" class="color" type="button">Search</button>
             </div>
         </div>
+         <input type="NameTbox"placeholder="Subject Name" type="text" oninput="Update(this.value,'name')"><br><br>
+		 <input type="TypeTbox" placeholder="Content Type" type="text" oninput="Update(this.value,'type')"><br><br>
+		 <input type="LinkTbox" placeholder="Link" type="text" oninput="Update(this.value,'link')"><br><br>
+        <hr>
+        <button id="insertBtn"class="btn btn-primary my-2 type="type="button">Upload</button>
         <table class="table table-hover table-dark">
             <thead>
               <th>Number content</th>
-              <th>Name</th>
-              <th>link</th>
+              <th>Subject Name</th>
+              <th>Content Type</th>
+              <th>Link</th>
               <th>Control Center</th>
             </thead>
             <tbody id="tbody1"></tbody>
@@ -51,15 +62,18 @@
             </button>
           </div>
           <div class="modal-body">
-            <label class="labs">Name: </label>
+            <label class="labs">Subject Name: </label>
             <input type="text" id="NameMod"><br>
 
             <label class="labs">Link: </label>
             <input type="text" id="LinkMod"><br>
 
+            <label class="labs">Type Content: </label>
+            <input type="text" id="TypeMod"><br>
+
           </div>
           <div class="modal-footer">
-            <button id="AddModBtn" type="button" class="btn btn-primary" onclick="AddCou()">Show to Users</button>
+            <!--<button id="AddModBtn" type="button" class="btn btn-primary" onclick="AddCou()">Show to Users</button>-->
             <button id="UpdModBtn" type="button" class="btn btn-success" onclick="UpdCou()">Update</button>
             <button id="DelModBtn" type="button" class="btn btn-danger" onclick="DelCou()">Delete</button>
         </div>
@@ -77,6 +91,18 @@
 
         <script id="MainScript">
         
+        let NameT =document.getElementById('NameTbox');
+            let TypeT =document.getElementById('TypeTbox');
+            let LinkT =document.getElementById('LinkTbox');
+
+            let nameV,typeV,linkV;
+
+            function Update(val,type){
+                if(type=='name') nameV=val;
+				else if(type=='type') typeV=val;
+                else if(type=='link') linkV=val;
+            }
+
 
     // Your web app's Firebase configuration
     // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -96,6 +122,34 @@
     firebase.initializeApp(firebaseConfig);
     let db = firebase.firestore();
    // const analytics = getAnalytics(app);
+   function Add_Doc_withID(){
+             db.collection("users").doc(nameV).set(
+                 {
+                     name: nameV,
+					 type: typeV,
+                     link: linkV
+                     
+
+                 }
+                 
+             )
+             
+
+             .then(function(){
+                 console.log("Document writein with id",nameV);
+
+             })
+             .catch(function(error){
+                 console.error("Error adding document",error);
+             })
+         }           
+         document.getElementById('insertBtn').onclick=function(){
+            Add_Doc_withID();
+            window.onload=GetAllDataOnce();
+           
+         }
+
+
    var ConNo;
    var ConList =[];
     function GetAllDataOnce(){
@@ -135,31 +189,36 @@
     }
     var ConNo=0;
     var ConList =[];*/
-    function AddItemToTable(name,link){
+    function AddItemToTable(name,type,link){
         var tbody1 = document.getElementById("tbody1");
         var trow = document.createElement("tr");
         var td0 = document.createElement("td");
         var td1 = document.createElement("td");
         var td2 = document.createElement("td");
-        ConList.push([name,link]);
+        var td3 = document.createElement("td");
+        ConList.push([name,type,link]);
         td0.innerHTML = ++ConNo;
         td1.innerHTML = name;
-        td2.innerHTML ='<a href="'+link+'"target="_blank">please press here --</a>' ,link;
+        td2.innerHTML = type;
+        td3.innerHTML ='<a href="'+link+'"target="_blank">please press here --</a>' ,link;
         td1.classList += "nameField";
+        td2.classList += "typeField";
         //td2.classList += "linkField";
         trow.appendChild(td0);
         trow.appendChild(td1);
         trow.appendChild(td2);
+        trow.appendChild(td3);
         
 
         var ControlDiv = document.createElement("div");
-        ControlDiv.innerHTML ='<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)"> Show to Users</button>'
+       // ControlDiv.innerHTML ='<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)"> Show to Users</button>'
         ControlDiv.innerHTML +='<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+ConNo+')"> Edit</button>'        
         trow.appendChild(ControlDiv);
         tbody1.appendChild(trow);
     }
         var ModName=document.getElementById('NameMod');
-        var ModLink=document.getElementById('LinkMod');
+        var ModType=document.getElementById('TypeMod');
+       var ModLink=document.getElementById('LinkMod');
 
         var BTNmodAdd =document.getElementById('AddModBtn');
         var BTNmodUpd =document.getElementById('UpdModBtn');
@@ -168,6 +227,7 @@
         function FillTboxes(index){
             if(index==null){
                 ModName.value = "";
+                ModType.value = "";
                 ModLink.value = "";
                 BTNmodAdd.style.display='inline-block';
                 BTNmodUpd.style.display='none';
@@ -177,7 +237,8 @@
             else{
                 --index;//becuse count in conNo start of 1 (++ConNo) 
                 ModName.value = ConList[index][0];
-                ModLink.value = ConList[index][1];
+                ModType.value = ConList[index][1];
+                 ModLink.value = ConList[index][2];
                 
                 ModName.disabled=true;
                 BTNmodAdd.style.display='none';
@@ -201,6 +262,7 @@
         function UpdCou(){
                     db.collection("users").doc(ModName.value).update({
                 name: ModName.value,
+                type: ModType.value,
                 link: ModLink.value
                 })
                 .then(() => {
@@ -217,7 +279,7 @@
         ConNo=0;
         tbody.innerHTML="";
         contentDocsList.forEach(element =>{
-            AddItemToTable(element.name,element.link);
+            AddItemToTable(element.name,element.type,element.link);
         })
     }
 
@@ -259,8 +321,11 @@
 
         else if(category.value==1)
             SearchTable("nameField");
+
+                else if(category.value==2)
+                SearchTable("typeField");
             
-         else if(category.value==2)
+         else if(category.value==3)
             SearchTable("linkField");
     }
 

@@ -12,6 +12,10 @@
     </head>
     <body>
     </br></br></br></br>
+    <div class="jumbotron text-center">
+    <h2>INFORMATION TECHNOLOGIE</h2>
+    <p>This Page You Can View Content </p> 
+  </div>
     <div class="progress-container">
         <div class="progress-bar" id="myBar"></div>
     </div>
@@ -22,8 +26,8 @@
                 <div class="input-group-append">
                 <select class="custom-select" id="CategorySelected">
                    <option selected value="1">By name</option>
-                   <!---- <option value="2">link</option>
-                    <option value="3">sno</option>-->
+                   <option value="2">type</option>
+                    <!--<option value="3">sno</option>-->
                   </select>
                 <button id="SearchBtn" class="color" type="button">Search</button>
             </div>
@@ -33,7 +37,8 @@
             <thead>
               <th>Number Content</th>
               <th>Name</th>
-              <th>link</th>
+              <th>content Type</th>
+              <th>Link</th>
             </thead>
             <tbody id="tbody1"></tbody>
 </table>
@@ -78,7 +83,7 @@
 
         });
     }
-    function GetAllDataRealtime(){
+    function GetAllDataFirestore(){
         db.collection("users").onSnapshot((querySnapshot)=>{
             var users =[];
             querySnapshot.forEach(doc =>{
@@ -90,21 +95,24 @@
     var ConNo=0;
     var tbody = document.getElementById("tbody1");
 
-    function AddItemToTable(name,link){
+    function AddItemToTable(name,type,link){
         var trow = document.createElement("tr");
         var td0 = document.createElement("td");
         var td1 = document.createElement("td");
         var td2 = document.createElement("td");
+        var td3 = document.createElement("td");
         
         td0.innerHTML = ++ConNo;
         td1.innerHTML = name;
-        td2.innerHTML = '<a href="'+link+'"target="_blank">please press here --</a>' ,link;;
+        td2.innerHTML = type;
+        td3.innerHTML = '<a href="'+link+'"target="_blank">please press here --</a>' ,link;;
         td1.classList += "nameField";
-        //td2.classList += "linkField";
+        td2.classList += "typeField";
 
         trow.appendChild(td0);
         trow.appendChild(td1);
         trow.appendChild(td2);
+        trow.appendChild(td3);
         tbody.appendChild(trow);
 
     }
@@ -112,7 +120,7 @@
         ConNo=0;
         tbody.innerHTML="";
         contentDocsList.forEach(element =>{
-            AddItemToTable(element.name,element.link);
+            AddItemToTable(element.name,element.type,element.link);
         })
     }
 
@@ -156,7 +164,7 @@
             SearchTable("nameField");
             
          else if(category.value==2)
-            SearchTable("linkField");
+            SearchTable("typeField");
         
     }
   </script>
