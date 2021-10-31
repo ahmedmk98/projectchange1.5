@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width , initial-scale=1.0">
+        <title>Assistant academic educational site</title>
+        <link rel="stylesheet" href="page-cover.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <style>
+        .labs{
+            display: inline-block;
+            width: 100px;
+        }
+        form.fav button{
+          position: absolute;
+          left: 550px;
+          top: 240px;
+          width: 150px; 
+          height: 50px;
+          cursor: pointer;
+          border-color: white;
+          border-radius: 15px;
+          border-style: solid ;
+          border-width: 3px;
+          background-color: blue;
+          color: white;
+          font-size: medium;
+          font-weight: bold;
+          text-align: center;
+			}
+        form.fav button :hover{
+          background-color: darkblue;
+      }
+    </style>
+
+    </head>
+    <body>
+    </br></br></br></br>
+    <div class="jumbotron text-center">
+    <h2>My-favorite</h2>
+    <p>Here you can find your choice of content see it , delete it and more</p> 
+  </div>
+  
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div> 
+        <div class="container wd-40">
+          <table class ="table table-dark">
+            <thead>
+              <th>CNumber</th>
+              <th>Name</th>
+              <th>Hours</th> 
+              <th>Lvl</th>
+              <th>Link</th>
+              <th>Control Center</th>
+              
+        
+            </thead>
+            <tbody id="tbody1"> </tbody>
+         </table>
+        </div>
+
+       
+ <!-- Modal -->
+ <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Confirm the transfer of the course to favorites</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label class="labs" >Name:</label>
+          <input type="text" id="NameMod"><br>
+          <label class="labs">Hours:</label>
+          <input type="text" id="HoursMod"><br>  
+          <label class="labs">Lvl:</label>
+          <input type="text" id="LvlMod"><br>
+          <label class="labs">Linl:</label>
+          <input type="text" id="LinkMod"><br>
+        </div> 
+        <div class="modal-footer">
+          <button id="DelModBtn" type="button" class="btn btn-danger" onclick="DelCourse()">Confirm </button>
+
+        </div>
+    
+      </div>
+    </div>
+  </div>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<script id="MainScript">
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyDqD9meSyK3_dznIgFGWk8mbj9_Gw0tmWM",
+    authDomain: "cloudfire-c5139.firebaseapp.com",
+    projectId: "cloudfire-c5139",
+    storageBucket: "cloudfire-c5139.appspot.com",
+    messagingSenderId: "81642213058",
+    appId: "1:81642213058:web:585ec1ce0739f3259f355b",
+    measurementId: "G-F4MV4ENSPB"
+  };
+  firebase.initializeApp(firebaseConfig);
+  let db = firebase.firestore();
+
+  function GetAllDataOnce(){
+      document.getElementById('tbody1').innerHTML="";
+      CorNo=0;
+      db.collection("Favorite").get().then((querySnapshot)=>{
+          var Favorite = [];
+          querySnapshot.forEach(doc =>{
+            Favorite.push(doc.data());
+          });
+          AddAllItemToTheTable(Favorite);
+      });
+
+  }
+
+  /*function GetAllDataRealtime(){
+    db.collection("Students").onSnapshot((querySnapshot)=>{
+        var students =[];
+        querySnapshot.forEach(doc =>{
+             students.push(doc.data());
+        });
+       AddAllItemToTheTable(students);
+    });
+}*/
+
+
+//----------Selection of all data ---------------//
+function Select_AllData(){
+    firebase.database().ref('Favorite').ones('value', function(snapshot){
+
+      snapshot.forEach(function (childSnapshot){
+
+          var Name = childSnapshot.val().NameOfCourses;
+          var Hours = childSnapshot.val().HoursOc;
+          var Lvl = childSnapshot.val().LvlOc;
+          var Link = childSnapshot.val().LinkOc;
+          AddItemToTable(Name , Hours , Lvl , Link);
+
+      });
+    });
+}
+window.onload = Select_AllData;
+
+  var CorNo=0;
+  var Corlist = [];
+  var tbody =document.getElementById('tbody1');
+
+ function AddItemToTable(Name,Hours,Lvl,Link){
+     
+     var trow = document.createElement('tr');
+     var td0 = document.createElement('td');
+     var td1 = document.createElement('td');
+     var td2 = document.createElement('td');
+     var td3 = document.createElement('td');
+     var td4 = document.createElement('td');
+     Corlist.push([Name,Hours,Lvl,Link]);
+     td0.innerHTML = ++CorNo;
+     td1.innerHTML = Name;
+     td2.innerHTML = Hours;
+     td3.innerHTML = Lvl;
+     td4.innerHTML = '<a href="'+Link+'"target="_blank">Show Content</a>' ,Link;
+
+     trow.appendChild(td0);
+     trow.appendChild(td1);
+     trow.appendChild(td2);
+     trow.appendChild(td3);
+     trow.appendChild(td4);
+
+    var ControlDiv = document.createElement("div");
+    //ControlDiv.innerHTML = '<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter " onclick ="FillTboxes(null)">test </button>';
+    ControlDiv.innerHTML += '<button type="button" class="btn btn-danger my-2 ml-2"  data-toggle="modal" data-target="#exampleModalCenter " onclick = "FillTboxes('+CorNo+')">Delete From Favorite </button>';
+
+    trow.appendChild(ControlDiv);
+     tbody.appendChild(trow);
+
+    }
+
+    var ModName = document.getElementById('NameMod');
+    var ModHours = document.getElementById('HoursMod');
+    var ModLvl = document.getElementById('LvlMod');
+    var ModLink = document.getElementById('LinkMod');
+
+    var BTNmodDel = document.getElementById('DelModBtn');
+
+    function FillTboxes(index){
+
+        if(index==null){
+            ModName.value ="";
+            ModHours.value ="";
+            ModLvl.value ="";
+            ModLink.value ="";
+
+        }
+        else{
+            --index;
+            ModName.value = Corlist[index][0];
+            ModHours.value = Corlist[index][1];
+            ModLvl.value = Corlist[index][2];
+            ModLink.value = Corlist[index][3];
+            ModName.disabled=true;
+            ModHours.disabled=true;
+            ModLvl.disabled=true;
+            ModLink.disabled=true;
+
+        }
+
+    }
+
+    function AddAllItemToTheTable(StudentDocsList){
+        CorNo=0;
+        tbody.innerHTML="";
+        StudentDocsList.forEach(element =>{
+           AddItemToTable(element.Name,element.Hours,element.Lvl,element.Link);
+        });
+    }
+
+  window.onload = GetAllDataOnce;
+  
+  function DelCourse(){
+    db.collection("Favorite").doc(ModName.value).delete().then(() => {
+        alert("Course successfully deleted!");
+                    GetAllDataOnce();
+                    $("#exampleModalCenter");
+        }).catch((error) => {
+            alert("Error removing document: ", error);
+        });
+  } 
+</script>
+ <!---------------------------------->
+ <form class="fav" action="Adding-to-fav.html" method="GET">
+  <button type="submit"> <i class="fav"></i>Select content</button>
+</form>
+<!---------------------------------->
+<script>
+  function mydark() {
+      var element = document.body;
+      element.classList.toggle("dark-mode");
+  }
+  </script>
+  
+  <!--this progress bar-->
+  <script>
+      window.onscroll = function() {myFunction()};
+      
+      function myFunction() {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (winScroll / height) * 100;
+        document.getElementById("myBar").style.width = scrolled + "%";
+      }
+  </script>
+   <!--this progress bar-->
+
+  <div class="dm"> Dark-mode </div>
+  <label class="switch">
+      <input type="checkbox"onclick="mydark()">
+      <span class="slider round"> </span>
+  </label>
+
+  <div class="quarter_circle_top_left"></div>
+  <div class="quarter_circle_top_right"></div>
+  <div class="quarter_circle_bottom_left"></div>
+  <div class="quarter_circle_bottom_right"></div>
+    </body>
+</html>
