@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Assistant academic educational site</title>
 		<link rel="stylesheet" href="ScrollBar.css">
-		<style>			
+		<style>
 			body{
 				background-color: black;
 				background-image: url(img/original_kku.jpeg);
@@ -256,32 +255,33 @@
                 background-repeat: no-repeat;
                 background-position: center;	
 			}
-			form.Computer_science button{
+			form.html button{
 				position: absolute;
 				left: 50px;
                 top: 135px;
 				width: 120px; 
-				height: 120px;
+				height: 230px;
 				cursor: pointer;
 				border-color: white;
                 border-radius: 15px;
 				border-style: solid ;
 				border-width: 3px;
 				background-color: limegreen;
-				background-image: url(img/Computer_science.png);
+				background-image: url(img/website_black.png);
                 background-size: 75px;
                 background-repeat: no-repeat;
                 background-position-x: center;
 				background-position-y: 10px;
 			}
-			form.Computer_science button:hover{
-				background-color: green;
+			form.html button:hover{
+				background-color: darkgreen;
+				background-image: url(img/website.png);
 			}
-			.Computer_science_block{
+			.html_block{
 				background: white;
 				color: black;
 				position: absolute;
-				font-size: 12px;
+				font-size: 15px;
 				font-weight: bold;
 				line-height: 15px;
                 vertical-align: baseline;
@@ -292,32 +292,48 @@
 				height: 20px;
 				border-radius: 15px;
 			}
-			form.Information_system button{
+			.html_block2{
+				background: white;
+				color: black;
+				position: absolute;
+				font-size: 15px;
+				font-weight: bold;
+				line-height: 15px;
+                vertical-align: baseline;
+                text-align: left;
+				left: 60px;
+				top: 254px;
+				width: 100px;
+				height: 100px;
+				border-radius: 15px;
+			}
+			form.css button{
 				position: absolute;
 				left: 225px;
                 top: 135px;
 				width: 120px; 
-				height: 120px;
+				height: 230px;
 				cursor: pointer;
 				border-color: white;
                 border-radius: 15px;
 				border-style: solid ;
 				border-width: 3px;
 				background-color: limegreen;
-				background-image: url(img/Information_system.png);
+				background-image: url(img/operation-dark.png);
                 background-size: 75px;
                 background-repeat: no-repeat;
                 background-position-x: center;
 				background-position-y: 10px;
 			}
-			form.Information_system button:hover{
-				background-color: green;
+			form.css button:hover{
+				background-color: darkgreen;
+                background-image: url(img/operation.png);
 			}
-			.Information_system_block{
+			.css_block{
 				background: white;
 				color: black;
 				position: absolute;
-				font-size: 12px;
+				font-size: 15px;
 				font-weight: bold;
 				line-height: 15px;
                 vertical-align: baseline;
@@ -328,6 +344,21 @@
 				height: 20px;
 				border-radius: 15px;
             }
+			.css_block2{
+				background: white;
+				color: black;
+				position: absolute;
+				font-size: 15px;
+				font-weight: bold;
+				line-height: 15px;
+                vertical-align: baseline;
+                text-align: left;
+				left: 235px;
+				top: 254px;
+				width: 100px;
+				height: 100px;
+				border-radius: 15px;
+			}
 			/*dark mode start here*/
 			.dm{
 				color: white;
@@ -466,7 +497,7 @@
 		<div class="green_block"> </div>
 		<div class="green_block_down"> </div>
 		<div class="img_kku"> <img src="img/KKU.png", width="123px" height="100px" alt="img for KKU"> </div>
-		<div class="boxoftitle"> All content page </div>
+		<div class="boxoftitle"> All computer science topics </div>
 		<div class="lines_big"> </div>
 		<div class="line_small"> </div>
 		<div class="gmail">Our e-mail is: <a href="mailto:forproject1998@gmail.com">forproject1998@gmail.com</a></div>
@@ -479,6 +510,14 @@
 		</label>
 
 		    <!--All in below will use database-->
+		<form class="html" action="Add-fav-ism362.html" method="GET">
+			<button type="submit"> <i class="html"></i> </button>
+		</form>
+			<!---------------------------------->
+		<form class="css" action="Add-fav-csm352.html" method="GET">
+			<button type="submit"> <i class="css"></i> </button>
+		</form>
+			<!---------------------------------->
 		<form class="youtube" action="https://www.youtube.com/channel/UC_3gfuooYibe9HNHIzOhkoA" method="GET">
 			<button type="submit"> <i class="youtube"></i> </button>
 		</form>
@@ -489,14 +528,6 @@
 			<!---------------------------------->
 		<form class="facebook" action="/action_page.php">
 			<button type="submit"> <i class="facebook"></i> </button>
-		</form>
-			<!---------------------------------->
-		<form class="Computer_science" action="cs_courses_super.html" method="GET">
-			<button type="submit"> <i class="Computer science"></i> </button>
-		</form>
-			<!---------------------------------->
-		<form class="Information_system" action="/action_page.php">
-			<button type="submit"> <i class="Information system"></i> </button>
 		</form>
 			<!---------------------------------->
 		<form class="searchbox" action="/action_page.php">
@@ -512,7 +543,10 @@
 			<button type="submit"> <i class="about_us"></i> About us </button>
 		</form>
 			<!---------------------------------->
-		<div class="Computer_science_block"> Computer science </div>
-		<div class="Information_system_block"> Inf-system </div>
+			
+		<div class="html_block"> ISM362 </div>
+		<div class="html_block2"></br>Information Technology</br></br>Level: 8</div>
+		<div class="css_block"> CSM352 </div>
+		<div class="css_block2"></br>Operating System</br></br>Level: 8</div>
 	</body>
 </html>

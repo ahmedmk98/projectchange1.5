@@ -8,13 +8,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width , initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-   
     </head>
 
     <body>
     </br></br></br></br>
     <div class="jumbotron text-center">
-    <h2>INFORMATION TECHNOLOGYY</h2>
+    <h2>Operating System</h2>
     <p>This Page You Can View,Add,Update And Delete Content </p> 
   </div>
   
@@ -36,7 +35,6 @@
             </div>
         </div>
          
-        <hr>
         <table class="table table-hover table-dark">
             <thead>
               <th>Number content</th>
@@ -50,13 +48,14 @@
 <input type="NameTbox"placeholder="Subject Name" type="text" oninput="Update(this.value,'name')"><br><br>
 		 <input type="TypeTbox" placeholder="Content Type" type="text" oninput="Update(this.value,'type')"><br><br>
 		 <input type="LinkTbox" placeholder="Link" type="text" oninput="Update(this.value,'link')"><br><br>
-         <button id="insertBtn"class="btn btn-primary my-2 type="type="button">Upload</button>
-         <P>If you have a file or photo please convert it to link by clicking here -<i class="arrow right"></i></P>
+        <hr>
+        <button id="insertBtn"class="btn btn-primary my-2 type="type="button">Upload</button>
+        <P>If you have a file or photo please convert it to link by clicking button in bleow </P>
 		<form class="links" action="https://ar.imgbb.com/" target="_blank">
-			<button type="submit"> <i class="links"></i>convert</button>
+			<button type="submit"> <i class="links"></i>Convert</button>
 		</form>
-        <div class="more-space">this page is connect %99.9 in database</div>
-        <div class="more-space">-------------------------------------------------------------</div>
+        <div class="more-space">----------------------------------------------------------------------------------------------------------------------------------------------------------------------------</div>
+        <div class="more-space"> </div>
 </div>
 
   <!-- Modal start-->
@@ -81,7 +80,7 @@
 
           </div>
           <div class="modal-footer">
-            <!--<button id="AddModBtn" type="button" class="btn btn-primary" onclick="AddCou()">Show to ISM362</button>-->
+            <!--<button id="AddModBtn" type="button" class="btn btn-primary" onclick="AddCou()">Show to CSM352</button>-->
             <button id="UpdModBtn" type="button" class="btn btn-success" onclick="UpdCou()">Update</button>
             <button id="DelModBtn" type="button" class="btn btn-danger" onclick="DelCou()">Delete</button>
         </div>
@@ -99,17 +98,7 @@
 
         <script id="MainScript">
         
-        let NameT =document.getElementById('NameTbox');
-            let TypeT =document.getElementById('TypeTbox');
-            let LinkT =document.getElementById('LinkTbox');
-
-            let nameV,typeV,linkV;
-
-            function Update(val,type){
-                if(type=='name') nameV=val;
-				else if(type=='type') typeV=val;
-                else if(type=='link') linkV=val;
-            }
+        
 
 
     // Your web app's Firebase configuration
@@ -131,7 +120,11 @@
     let db = firebase.firestore();
    // const analytics = getAnalytics(app);
    function Add_Doc_withID(){
-             db.collection("ISM362").doc(nameV).set(
+   // db.collection('users').doc(this.email).collection('courses').doc(count_content_to_user).collection("csm..").doc(nameV).set({
+
+             //db.collection("courses").doc().collection("CSM352").doc(nameV).set( this line worked but there problem in read data <-fawaz->
+                db.collection("CSM352").doc(nameV).set(
+
                  {
                      name: nameV,
 					 type: typeV,
@@ -163,17 +156,18 @@
     function GetAllDataOnce(){
         document.getElementById("tbody1").innerHTML="";
         ConNo=0;
-        db.collection("ISM362").get().then((querySnapshot)=>{
-            var ISM362 =[];
+       // db.collection("courses").doc()
+       db.collection("CSM352").get().then((querySnapshot)=>{
+            var CSM352 =[];
             querySnapshot.forEach(doc =>{
-                 ISM362.push(doc.data());
+                CSM352.push(doc.data());
             });
-            AddAllItemToTheTable(ISM362);
+            AddAllItemToTheTable(CSM352);
 
         });
     }
     window.onload=GetAllDataOnce();
-   
+    
     function AddItemToTable(name,type,link){
         var tbody1 = document.getElementById("tbody1");
         var trow = document.createElement("tr");
@@ -196,7 +190,7 @@
         
 
         var ControlDiv = document.createElement("div");
-       // ControlDiv.innerHTML ='<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)"> Show to ISM362</button>'
+       // ControlDiv.innerHTML ='<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)"> Show to CSM352</button>'
         ControlDiv.innerHTML +='<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+ConNo+')"> Edit</button>'        
         trow.appendChild(ControlDiv);
         tbody1.appendChild(trow);
@@ -233,7 +227,8 @@
 
         }
         function DelCou(){
-        db.collection("ISM362").doc(ModName.value).delete().then(() => {
+           // db.collection("courses").doc().collection("CSM352").doc(ModName.value).delete().then(() => {
+       db.collection("CSM352").doc(ModName.value).delete().then(() => {
         console.log("Document successfully deleted!");
                     GetAllDataOnce();
                     $("#exampleModalCenter");
@@ -246,7 +241,8 @@
     
     
         function UpdCou(){
-                    db.collection("ISM362").doc(ModName.value).update({
+            
+            db.collection("CSM352").doc(ModName.value).update({
                 name: ModName.value,
                 type: ModType.value,
                 link: ModLink.value
@@ -271,11 +267,24 @@
     }
 
     window.onload = GetAllDataOnce ;
+    let NameT =document.getElementById('NameTbox');
+            let TypeT =document.getElementById('TypeTbox');
+            let LinkT =document.getElementById('LinkTbox');
+
+            let nameV,typeV,linkV;
+
+            function Update(val,type){
+                if(type=='name') nameV=val;
+				else if(type=='type') typeV=val;
+                else if(type=='link') linkV=val;
+            }
 
     var SearchBar =document.getElementById("SearchBar");
     var SearchBtn =document.getElementById("SearchBtn");
     var category =document.getElementById("CategorySelected");
     var tbody =document.getElementById("tbody1");
+
+    
 
     function SearchTable(category){
 

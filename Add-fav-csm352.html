@@ -11,12 +11,12 @@
     
     <style>
         .labs{
-            display: inline-block;
-            width: 100px;
+          display: inline-block;
+          width: 100px;
         }
         form.fav button{
           position: absolute;
-          left: 550px;
+          left: 480px;
           top: 240px;
           width: 150px; 
           height: 50px;
@@ -30,23 +30,43 @@
           font-size: medium;
           font-weight: bold;
           text-align: center;
-			}
+			  }
         form.fav button :hover{
           background-color: darkblue;
-      }
+        }
+        form.GoAddBtn button{
+          position: absolute;
+          left: 640px;
+          top: 240px;
+          width: 150px; 
+          height: 50px;
+          cursor: pointer;
+          border-color: white;
+          border-radius: 15px;
+          border-style: solid ;
+          border-width: 3px;
+          background-color: green;
+          color: white;
+          font-size: medium;
+          font-weight: bold;
+          text-align: center;
+        }
+        form.GoAddBtn button :hover{
+          background-color: darkgreen;
+        }
     </style>
 
     </head>
     <body>
-    </br></br></br></br>
-    <div class="jumbotron text-center">
-    <h2>My-favorite</h2>
-    <p>Here you can find your choice of content see it , delete it and more</p> 
-  </div>
-  
-    <div class="progress-container">
-        <div class="progress-bar" id="myBar"></div>
-    </div> 
+      </br></br></br></br>
+      <div class="jumbotron text-center">
+      <h2>Operating System</h2>
+      <p>Choose your favorite content and add it in your favorites</p> 
+    </div>
+    
+      <div class="progress-container">
+          <div class="progress-bar" id="myBar"></div>
+      </div> 
         <div class="container wd-40">
           <table class ="table table-hover table-dark">
             <thead>
@@ -56,7 +76,6 @@
               <!--<th>Lvl</th>-->
               <th>Link</th>
               <th>Control Center</th>
-              
               
         
             </thead>
@@ -86,7 +105,7 @@
           <input type="text" id="LinkMod"><br>
         </div> 
         <div class="modal-footer">
-          <button id="DelModBtn" type="button" class="btn btn-danger" onclick="DelCourse()">Confirm </button>
+          <button id="addModBtn" type="button" class="btn btn-success" onclick="AddCourse()">Confirm</button>
 
         </div>
     
@@ -102,16 +121,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 <script id="MainScript">
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-/*const firebaseConfig = {
-    apiKey: "AIzaSyDqD9meSyK3_dznIgFGWk8mbj9_Gw0tmWM",
-    authDomain: "cloudfire-c5139.firebaseapp.com",
-    projectId: "cloudfire-c5139",
-    storageBucket: "cloudfire-c5139.appspot.com",
-    messagingSenderId: "81642213058",
-    appId: "1:81642213058:web:585ec1ce0739f3259f355b",
-    measurementId: "G-F4MV4ENSPB"
-  };*/
   const firebaseConfig = {
         apiKey: "AIzaSyCyUYNEh2VRCsjzxroR94OAkwokutPnDig",
         authDomain: "upload-5e782.firebaseapp.com",
@@ -128,30 +137,21 @@
   function GetAllDataOnce(){
       document.getElementById('tbody1').innerHTML="";
       CorNo=0;
-      db.collection("Favorite").get().then((querySnapshot)=>{
-          var Favorite = [];
+      db.collection("CSM352").get().then((querySnapshot)=>{
+          var students = [];
           querySnapshot.forEach(doc =>{
-            Favorite.push(doc.data());
+              students.push(doc.data());
           });
-          AddAllItemToTheTable(Favorite);
+          AddAllItemToTheTable(students);
       });
 
   }
 
-  function GetAllDataRealtime(){
-    db.collection("Students").onSnapshot((querySnapshot)=>{
-        var students =[];
-        querySnapshot.forEach(doc =>{
-             students.push(doc.data());
-        });
-       AddAllItemToTheTable(students);
-    });
-}
-
-
+  
 //----------Selection of all data ---------------//
 function Select_AllData(){
-    firebase.database().ref('ISM62').ones('value', function(snapshot){
+    
+    db.collection("CSM352").doc('value', function(snapshot){
 
       snapshot.forEach(function (childSnapshot){
 
@@ -159,7 +159,7 @@ function Select_AllData(){
           var type = childSnapshot.val().TypeOc;
           //var Lvl = childSnapshot.val().LvlOc;
           var link = childSnapshot.val().LinkOc;
-          AddItemToTable(name , type ,link);
+          AddItemToTable(name , type , link);
 
       });
     });
@@ -189,11 +189,11 @@ window.onload = Select_AllData;
      trow.appendChild(td1);
      trow.appendChild(td2);
      trow.appendChild(td3);
-    // trow.appendChild(td4);
+     //trow.appendChild(td4);
 
     var ControlDiv = document.createElement("div");
     //ControlDiv.innerHTML = '<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter " onclick ="FillTboxes(null)">test </button>';
-    ControlDiv.innerHTML += '<button type="button" class="btn btn-danger my-2 ml-2"  data-toggle="modal" data-target="#exampleModalCenter " onclick = "FillTboxes('+CorNo+')">Delete From Favorite </button>';
+    ControlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml-2"  data-toggle="modal" data-target="#exampleModalCenter " onclick = "FillTboxes('+CorNo+')">ADD TO Favorite </button>';
 
     trow.appendChild(ControlDiv);
      tbody.appendChild(trow);
@@ -201,11 +201,11 @@ window.onload = Select_AllData;
     }
 
     var ModName = document.getElementById('NameMod');
-    var ModHours = document.getElementById('TypeMod');
+    var ModType = document.getElementById('TypeMod');
     //var ModLvl = document.getElementById('LvlMod');
     var ModLink = document.getElementById('LinkMod');
 
-    var BTNmodDel = document.getElementById('DelModBtn');
+    var BTNmodAdd = document.getElementById('addModBtn');
 
     function FillTboxes(index){
 
@@ -240,53 +240,60 @@ window.onload = Select_AllData;
     }
 
   window.onload = GetAllDataOnce;
-  
-  function DelCourse(){
-    db.collection("Favorite").doc(ModName.value).delete().then(() => {
-        alert("Course successfully deleted!");
-                    GetAllDataOnce();
-                    $("#exampleModalCenter");
-                    //location.reload();
-
-        }).catch((error) => {
-            alert("Error removing document: ", error);
-        });
-  } 
-</script>
- <!---------------------------------->
- <form class="fav" action="cs_courses_user.html" method="GET">
-  <button type="submit"> <i class="fav"></i>Back to courses</button>
-</form>
-<!---------------------------------->
-<script>
-  function mydark() {
-      var element = document.body;
-      element.classList.toggle("dark-mode");
-  }
-  </script>
-  
-  <!--this progress bar-->
-  <script>
-      window.onscroll = function() {myFunction()};
+  function AddCourse(){
+    db.collection("Favorite").doc(ModName.value).set({
       
-      function myFunction() {
-        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        var scrolled = (winScroll / height) * 100;
-        document.getElementById("myBar").style.width = scrolled + "%";
+
+      name : ModName.value,
+          type : ModType.value,
+          //Lvl : ModLvl.value,
+          link : ModLink.value,
+          
+
+        },alert("successfully added to favorite"),);
+  }
+</script>
+
+
+    <!---------------------------------->
+    <form class="fav" action="Favorite.html" method="GET">
+      <button type="submit"> <i class="fav"></i>My-favorite</button>
+    </form>
+    <!---------------------------------->
+    <form class="GoAddBtn" action="add_content_CSM352.html" method="GET">
+      <button type="submit"> <i class="fav"></i>Add  a content</button>
+    </form>
+    <!---------------------------------->
+    
+    <script>
+      function mydark() {
+          var element = document.body;
+          element.classList.toggle("dark-mode");
       }
-  </script>
-   <!--this progress bar-->
-
-  <div class="dm"> Dark-mode </div>
-  <label class="switch">
-      <input type="checkbox"onclick="mydark()">
-      <span class="slider round"> </span>
-  </label>
-
-  <div class="quarter_circle_top_left"></div>
-  <div class="quarter_circle_top_right"></div>
-  <div class="quarter_circle_bottom_left"></div>
-  <div class="quarter_circle_bottom_right"></div>
+      </script>
+      
+      <!--this progress bar-->
+      <script>
+          window.onscroll = function() {myFunction()};
+          
+          function myFunction() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+          }
+      </script>
+       <!--this progress bar-->
+  
+      <div class="dm"> Dark-mode </div>
+      <label class="switch">
+          <input type="checkbox"onclick="mydark()">
+          <span class="slider round"> </span>
+      </label>
+  
+      <div class="quarter_circle_top_left"></div>
+      <div class="quarter_circle_top_right"></div>
+      <div class="quarter_circle_bottom_left"></div>
+      <div class="quarter_circle_bottom_right"></div>
     </body>
 </html>

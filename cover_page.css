@@ -10,6 +10,20 @@ th{
     font-variant: small-caps;
     font-family: sans-serif;
 }
+form.links button{
+    height: 40px;
+    width: 75px;
+    font-size: medium;
+    background-color: limegreen;
+    color: white;
+    border-style: none none none none;
+    border-radius: 4px;
+    border-color: white;
+    cursor: pointer;
+}
+.more-space{
+    color: white;
+}
 .labs{
         display: inline-block;
         width: 100px;
@@ -22,7 +36,7 @@ th{
 .color{
     background-color: limegreen;
     color: white;
-    border-style: none none inset none;
+    border-style: none none none none;
     font-style: oblique;
     font-variant: small-caps;
     font-family: sans-serif;

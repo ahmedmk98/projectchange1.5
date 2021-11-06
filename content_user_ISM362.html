@@ -4,10 +4,10 @@
         <title>Assistant academic educational site</title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
         <link rel="stylesheet" href="cover_page.css">
+        <link rel="stylesheet" href="ScrollBar.css">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width , initial-scale=1.0">
-        <title>Content User</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
@@ -74,22 +74,22 @@
    // const analytics = getAnalytics(app);
 
     function GetAllDataOnce(){
-        db.collection("users").get().then((querySnapshot)=>{
-            var users =[];
+        db.collection("ISM362").get().then((querySnapshot)=>{
+            var ISM362 =[];
             querySnapshot.forEach(doc =>{
-                 users.push(doc.data());
+                 ISM362.push(doc.data());
             });
-            AddAllItemToTheTable(users);
+            AddAllItemToTheTable(ISM362);
 
         });
     }
     function GetAllDataFirestore(){
-        db.collection("users").onSnapshot((querySnapshot)=>{
-            var users =[];
+        db.collection("ISM362").onSnapshot((querySnapshot)=>{
+            var ISM362 =[];
             querySnapshot.forEach(doc =>{
-                 users.push(doc.data());
+                 ISM362.push(doc.data());
             });
-           AddAllItemToTheTable(users);
+           AddAllItemToTheTable(ISM362);
         });
     }
     var ConNo=0;
