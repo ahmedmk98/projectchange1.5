@@ -735,6 +735,46 @@
 				text-align: center;
 				float: right;
 			}
+			form.bb button{
+				position: absolute;
+				left: 410px;
+                top: 337px;
+				width: 120px; 
+				height: 120px;
+				cursor: pointer;
+				border-color: white;
+                border-radius: 15px;
+				border-style: solid ;
+				border-width: 4px;
+				background-color: limegreen;
+				background-image: url(img/bb.png);
+                background-size: 100px;
+                background-repeat: no-repeat;
+                background-position: center;
+			}
+			form.bb button:hover{
+				background-color: green;
+			}
+			form.academic button{
+				position: absolute;
+				left: 590px;
+                top: 337px;
+				width: 120px; 
+				height: 120px;
+				cursor: pointer;
+				border-color: white;
+                border-radius: 15px;
+				border-style: solid ;
+				border-width: 4px;
+				background-color: limegreen;
+				background-image: url(img/KKU.png);
+                background-size: 100px;
+                background-repeat: no-repeat;
+                background-position: center;
+			}
+			form.academic button:hover{
+				background-color: green;
+			}
 		</style>
 	</head>
 	<body onload="myFunction()" style="margin:0;">
@@ -821,6 +861,14 @@
 		    <!---------------------------------->
 		<form class="about_us" action="about_us.html">
 			<button type="submit"> <i class="about_us"></i> About us </button>
+		</form>
+			<!---------------------------------->
+		<form class="bb" action="https://mysso.kku.edu.sa/cas/login?service=http%3A//www.kku.edu.sa/ar/casservice%3Fdestination%3D/user/login%253Fdestination%253Dar%25252Fmykku" target="_blank">
+			<button type="submit"> <i class="bb"></i> </button>
+		</form>
+			<!---------------------------------->
+		<form class="academic" action="https://www.kku.edu.sa/en" target="_blank">
+			<button type="submit"> <i class="academic"></i> </button>
 		</form>
 			<!---------------------------------->
 		<div class="add_block"> Select the content </div>
